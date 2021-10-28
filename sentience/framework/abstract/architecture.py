@@ -1,20 +1,26 @@
 from abc import ABC, abstractmethod
-from sentience.framework.abstract.model import Model
+from typing import Any, Dict
+from sentience.framework.abstract.model_schema import ModelSchema
 
 class Architecture(ABC):
     """
-    Architecture abstract class that holds the base architecture definition of the model.
+    Model architecture base class. 
+    
+    Keyword arguments:-
+    schema -- ModelSchema. Stores the model schema from which an architecture is constructed. 
     """
+    def __init__(self, schema:ModelSchema):
+        self.SCHEMA = schema.SCHEMA
+        self.ARCH = dict()
     
     @abstractmethod
-    def __init__(self, arch_dict) -> None:
-        super().__init__()
-        pass
-    
-    @abstractmethod
-    def create_model(self) -> Model:
-        """
-        Creates a base model from the architecture dictionary
+    def create_arch(self) -> Dict[str, Any]:
+        """Create an architecture from the defined schema. Must be implemented for each 
+        network search space.
+        
+        Returns:-
+        Dict with the model architecture.
         """
         pass
     
+    # ARCH = property(create_arch)
