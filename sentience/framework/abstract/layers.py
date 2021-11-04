@@ -1,9 +1,9 @@
-from typing import List, Tuple, Union
+from typing import Tuple, Union
 from dataclasses import dataclass, field
 
 @dataclass
 class Layer:
-    name: str = "layer"
+    name: str
 
 @dataclass
 class Activation(Layer):
@@ -23,32 +23,34 @@ class Sigmoid(Activation):
 
 @dataclass
 class Dense(Layer):
-    input_size: list = field(default_factory=list)
-    output_size: list = field(default_factory=list)
+    input_size: list
+    output_size: list
     activation : Union[str, Activation] = None
 
 @dataclass
 class Conv1D(Layer):
-    input_size: Tuple[int, int] = None
-    filters: int = 1
-    kernel_size: Union[int, Tuple[int]] = 3
+    input_size: Tuple[int, int]
+    filters: int
+    kernel_size: Union[int, Tuple[int]]
+    strides: Union(int, Tuple[int]) = 1
     padding: str = "valid"
     dilation_rate: int = 1
     channels_first: bool = False
 
 @dataclass
 class Conv2D(Layer):
-    input_size: Tuple[int, int, int] = None
-    filters: int = 1
-    kernel_size: Union[int, Tuple[int, int]] = 3
+    input_size: Tuple[int, int, int]
+    filters: int
+    kernel_size: Union[int, Tuple[int, int]]
+    strides: Union[int, Tuple[int, int]] = (1, 1)
     padding: str = "valid"
     dilation_rate: int = 1
     channels_first: bool = False
 
 @dataclass
 class RNN(Layer):
-    input_size: Tuple[int, ...] = None
-    units: int = None
+    input_size: Tuple[int, ...]
+    units: int
     return_sequences: bool = False
     return_state: bool = False
     bidirectional: bool = False
@@ -56,8 +58,8 @@ class RNN(Layer):
 
 @dataclass
 class LSTM(RNN):
-    activation: Union[str, Activation] = Tanh
-    recurrent_activation: Union[str, Activation] = Sigmoid
+    activation: Union[str, Activation] = "tanh"
+    recurrent_activation: Union[str, Activation] = "sigmoid"
 
 @dataclass
 class GRU(RNN):
