@@ -1,7 +1,7 @@
 from typing import Dict
 from abc import ABC, abstractmethod
-from sentience.framework.abstract.layers import *
-from sentience.framework.abstract.randomization import Boolean, Discrete
+from sentience.framework.abc.layers import *
+from sentience.framework.abc.randomization import Boolean, Discrete
 
 class ModelSchema(ABC):
     """

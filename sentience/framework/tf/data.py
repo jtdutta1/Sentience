@@ -1,7 +1,7 @@
 import os
 from typing import AnyStr
 from tensorflow import data
-from sentience.framework.abstract.data import Dataset
+from sentience.framework.abc.data import Dataset
 
 class TFDataset(Dataset):
     """

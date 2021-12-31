@@ -1,16 +1,17 @@
 import os
 import warnings
 import tensorflow as tf
-from sentience.framework.abstract.train import Trainer
-from sentience.framework.abstract.state_config import state_config
-from sentience.framework.abstract.data import Dataset
+from sentience.framework.abc.train import Trainer
+from sentience.framework.abc.state_config import state_config
+from sentience.framework.abc.data import Dataset
 from tensorflow.keras import Model, callbacks, optimizers, losses
 
 class TFTrainer(Trainer):
     """
     TensorFlow trainer state class. Trains a model and routinely saves the training state.
     """
-    def __init__(self, tf_model: Model, 
+    def __init__(self, 
+                 tf_model: Model, 
                  tf_optimizer: optimizers.Optimizer, 
                  tf_loss: function,
                  train_dataset: Dataset,
@@ -36,7 +37,11 @@ class TFTrainer(Trainer):
         self.completed_epochs = 0
         self.batch_size = batch_size
     
-    def train(self, state_path, save_state_interval, resume=False, model_checkpoint_path=None) -> None:
+    def train(self, 
+              state_path, 
+              save_state_interval, 
+              resume=False, 
+              model_checkpoint_path=None) -> None:
         """
         TBD
         """

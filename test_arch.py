@@ -1,4 +1,4 @@
-from sentience.framework.abstract.standard.encoder_decoder import EncoderDecoderSchema, EncoderDecoderArch
+from sentience.framework.abc.standard.encoder_decoder import EncoderDecoderSchema, EncoderDecoderArch
 
 m_schema = EncoderDecoderSchema(40, 10)
 print(m_schema.SCHEMA)

@@ -1,8 +1,8 @@
    
 from typing import Dict
-from sentience.framework.abstract.layers import ReLU, Tanh, Sigmoid
-from sentience.framework.abstract import ModelSchema
-from sentience.framework.abstract.randomization import Boolean, Discrete, Categorical
+from sentience.framework.abc.layers import ReLU, Tanh, Sigmoid
+from sentience.framework.abc import ModelSchema
+from sentience.framework.abc.randomization import Boolean, Discrete, Categorical
 
 class EncoderDecoderSchema(ModelSchema):
     """

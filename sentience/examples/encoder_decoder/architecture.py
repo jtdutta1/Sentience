@@ -1,7 +1,7 @@
 from typing import List, Dict, Any
-from sentience.framework.abstract.layers import Dense
-from sentience.framework.abstract.randomization import Categorical, Discrete
-from sentience.framework.abstract import ModelSchema, Architecture
+from sentience.framework.abc.layers import Dense
+from sentience.framework.abc.randomization import Categorical, Discrete
+from sentience.framework.abc import ModelSchema, Architecture
 
 
 class EncoderDecoderArch(Architecture):
@@ -39,11 +39,9 @@ class EncoderDecoderArch(Architecture):
         
         # Create encoding layer
         _arch["encoder_block"] = encoder_layers
-        encoder_layer = Dense()
-        encoder_layer.input_size = output_shape.copy()
-        output_shape = output_shape.copy()
+        input_shape = output_shape.copy()
         output_shape[-1] = encoded_dim
-        encoder_layer.output_size = output_shape
+        encoder_layer = Dense(input_size=input_shape.copy(), output_size=output_shape)
         encoder_layer.activation = self.SCHEMA["encoder"]["activation"].decide()
         _arch["encoded_layer"] = encoder_layer
         
@@ -55,15 +53,14 @@ class EncoderDecoderArch(Architecture):
         _arch["decoder_block"] = decoder_layers
         
         # Create decoding layer
-        decoder_layer = Dense()
-        decoder_layer.input_size = output_shape.copy()
-        output_shape = output_shape.copy()
-        output_shape[-1] = decoded_dim
-        decoder_layer.output_size = output_shape
+        input_shape = output_shape.copy()
+        output_shape[-1] = decoded_dim        
+        decoder_layer = Dense(input_size=input_shape.copy(), output_size=output_shape)
         decoder_layer.activation = self.SCHEMA["decoder"]["activation"].decide()
         _arch["decoded_layer"] = decoder_layer
         
         self.ARCH = _arch
+        return _arch
     
     def __get_block__(self, 
                       num_layers:int, 
@@ -97,9 +94,7 @@ class EncoderDecoderArch(Architecture):
         for dim in layer_dims:
             output_shape = input_shape.copy()
             output_shape[-1] = dim
-            layer = Dense()
-            layer.input_size = input_shape
-            layer.output_size = output_shape
+            layer = Dense(input_size=input_shape, output_size=output_shape)
             layer.activation = activation.decide() if activation is not None else None
             input_shape = output_shape.copy()
             encoder_layers.append(layer)
